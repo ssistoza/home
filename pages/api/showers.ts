@@ -2,7 +2,6 @@ import { TallyCategory } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { HttpMethod, HttpStatus, PostRequest } from '../../lib/utils';
 import prisma from '../../lib/prisma';
-import { Tally } from '../../lib/tally';
 
 interface IShowerPostRequest extends PostRequest {}
 
