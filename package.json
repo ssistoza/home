@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "db:start:dev": "concurrently --names \"dev,shadow\" \"yarn db:dev\" \"yarn db:shadow\"",
@@ -12,7 +12,8 @@
     "db:dev": "pscale connect home dev --port 3309",
     "db:shadow": "pscale connect home shadow --port 3310",
     "db:main": "pscale connect home main --port 3309",
-    "db:request": "pscale deploy-request create home dev"
+    "db:request": "pscale deploy-request create home dev",
+    "prisma": "prisma"
   },
   "dependencies": {
     "@prisma/client": "3.9.2",
