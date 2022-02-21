@@ -16,7 +16,7 @@ export default async function handler(
         const showers = await prisma.tally.findMany({
           where: { category: { equals: TallyCategory.Shower } },
         });
-        res.status(200).json(showers);
+        res.status(HttpStatus.OK).json(showers);
       } catch (e) {
         console.error('Request error', e);
         res.status(500).json({ error: 'Error fetching showers' });
@@ -30,7 +30,7 @@ export default async function handler(
         }
 
         const newShowerTally = await prisma.tally.create({
-          data: { category: TallyCategory.Shower },
+          data: { category: TallyCategory.Shower, isTestData: body.isTest },
         });
 
         res.status(HttpStatus.CREATED).json(newShowerTally);
