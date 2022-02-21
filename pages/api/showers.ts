@@ -1,4 +1,4 @@
-import { TallyCategory } from '@prisma/client';
+import { Tally, TallyCategory } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { HttpMethod, HttpStatus, PostRequest } from '../../lib/utils';
 import prisma from '../../lib/prisma';
@@ -14,12 +14,24 @@ export default async function handler(
     case HttpMethod.GET:
       try {
         const { removeTest } = req.query;
-        const showers = await prisma.tally.findMany({
-          where: {
-            category: { equals: TallyCategory.Shower },
-            isTestData: { not: Boolean(removeTest) },
-          },
-        });
+        const shouldRemoveTestData = Boolean(removeTest);
+
+        let showers: Tally[] = [];
+        if (shouldRemoveTestData) {
+          showers = await prisma.tally.findMany({
+            where: {
+              category: { equals: TallyCategory.Shower },
+              isTestData: { equals: false },
+            },
+          });
+        } else {
+          showers = await prisma.tally.findMany({
+            where: {
+              category: { equals: TallyCategory.Shower },
+            },
+          });
+        }
+
         res.status(HttpStatus.OK).json(showers);
       } catch (e) {
         console.error('Request error', e);
