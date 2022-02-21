@@ -42,6 +42,8 @@ export default async function handler(
       try {
         const body: IShowerPostRequest = req.body;
 
+        console.log('TEST: ', body);
+
         if (!body.isShane) {
           return res.status(HttpStatus.UNAUTHORIZED).end('You are not Shane!');
         }
