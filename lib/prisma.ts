@@ -1,6 +1,10 @@
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 
-const prisma = global.prisma || new PrismaClient();
+const prisma: PrismaClient<
+  Prisma.PrismaClientOptions,
+  never,
+  Prisma.RejectOnNotFound | Prisma.RejectPerOperation
+> = global.prisma || new PrismaClient();
 
 if (process.env.NODE_ENV === 'development') global.prisma = prisma;
 

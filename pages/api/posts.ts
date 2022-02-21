@@ -1,10 +1,14 @@
+import { NextApiRequest, NextApiResponse } from 'next';
+import { HttpMethod } from '../../lib/apiUtils';
 import prisma from '../../lib/prisma';
 
-export default async function assetHandler(req, res) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const { method } = req;
-
   switch (method) {
-    case 'GET':
+    case HttpMethod.GET:
       try {
         const posts = await prisma.post.findMany();
         res.status(200).json(posts);

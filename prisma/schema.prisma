@@ -19,3 +19,19 @@ model Post {
   title     String   @db.VarChar(255)
   content   String
 }
+
+model TallyName {
+  id Int @default(autoincrement()) @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name String @db.VarChar(30)
+  tallys Tally[]
+}
+
+model Tally {
+  id Int @default(autoincrement()) @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  tallyName TallyName @relation(fields: [tallyNameId], references: [id])
+  tallyNameId Int
+}
