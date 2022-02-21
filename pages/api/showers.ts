@@ -29,6 +29,9 @@ export default async function handler(
     case HttpMethod.POST:
       try {
         const body: IShowerPostRequest = req.body;
+        res.send(body);
+        return;
+
         if (!body.isShane) {
           return res.status(HttpStatus.UNAUTHORIZED).end('You are not Shane!');
         }
