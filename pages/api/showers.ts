@@ -25,7 +25,10 @@ export default async function handler(
     case HttpMethod.POST:
       try {
         const body: IShowerPostRequest = req.body;
-        if (!body.isShane) throw 'Not Shane!';
+        if (!body.isShane) {
+          res.status(HttpStatus.UNAUTHORIZED).end('You are not Shane!');
+          return;
+        }
 
         const newShowerTally = await prisma.tally.create({
           data: { category: TallyCategory.Shower },

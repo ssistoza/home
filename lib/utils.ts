@@ -9,6 +9,8 @@ export enum HttpMethod {
 export enum HttpStatus {
   OK = 200,
   CREATED = 201,
+  UNAUTHORIZED = 401,
+  METHOD_NOT_ALLOWED = 405,
 }
 
 export interface PostRequest {
