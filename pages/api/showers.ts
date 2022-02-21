@@ -13,8 +13,12 @@ export default async function handler(
   switch (method) {
     case HttpMethod.GET:
       try {
+        const { removeTest } = req.query;
         const showers = await prisma.tally.findMany({
-          where: { category: { equals: TallyCategory.Shower } },
+          where: {
+            category: { equals: TallyCategory.Shower },
+            isTestData: { equals: Boolean(removeTest) },
+          },
         });
         res.status(HttpStatus.OK).json(showers);
       } catch (e) {
