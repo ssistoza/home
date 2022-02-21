@@ -1,5 +1,6 @@
+import { TallyCategory } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { HttpMethod, HttpStatus, PostRequest } from '../../lib/apiUtils';
+import { HttpMethod, HttpStatus, PostRequest } from '../../lib/utils';
 import prisma from '../../lib/prisma';
 import { Tally } from '../../lib/tally';
 
@@ -10,17 +11,11 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const { method } = req;
-  const tallyShower = await prisma.tally.findFirst({
-    where: {
-      tallyName: { is: { name: Tally.Shower } },
-    },
-  });
-
   switch (method) {
     case HttpMethod.GET:
       try {
         const showers = await prisma.tally.findMany({
-          where: { tallyNameId: { equals: tallyShower.id } },
+          where: { category: { equals: TallyCategory.Shower } },
         });
         res.status(200).json(showers);
       } catch (e) {
@@ -34,7 +29,7 @@ export default async function handler(
         if (!body.shanesistoza) throw 'Not Shane!';
 
         const newShowerTally = await prisma.tally.create({
-          data: { tallyNameId: tallyShower.id },
+          data: { category: TallyCategory.Shower },
         });
 
         res.status(HttpStatus.CREATED).json(newShowerTally);

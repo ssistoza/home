@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { HttpMethod, HttpStatus, PostRequest } from '../../lib/apiUtils';
+import { HttpMethod, HttpStatus, PostRequest } from '../../lib/utils';
 import prisma from '../../lib/prisma';
 import { Tally } from '../../lib/tally';
+import { TallyCategory } from '@prisma/client';
 
 interface IDogBonePostRequest extends PostRequest {}
 
@@ -10,17 +11,11 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const { method } = req;
-  const tallyDogBone = await prisma.tally.findFirst({
-    where: {
-      tallyName: { is: { name: Tally.DogBone } },
-    },
-  });
-
   switch (method) {
     case HttpMethod.GET:
       try {
         const showers = await prisma.tally.findMany({
-          where: { tallyNameId: { equals: tallyDogBone.id } },
+          where: { category: { equals: TallyCategory.DogBone } },
         });
         res.status(200).json(showers);
       } catch (e) {
@@ -34,7 +29,7 @@ export default async function handler(
         if (!body.shanesistoza) throw 'Not Shane!';
 
         const newDogBoneTally = await prisma.tally.create({
-          data: { tallyNameId: tallyDogBone.id },
+          data: { category: TallyCategory.DogBone },
         });
 
         res.status(HttpStatus.CREATED).json(newDogBoneTally);
