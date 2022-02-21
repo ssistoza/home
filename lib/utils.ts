@@ -12,5 +12,6 @@ export enum HttpStatus {
 }
 
 export interface PostRequest {
-  shanesistoza: boolean;
+  isShane?: boolean;
+  isTest?: boolean;
 }

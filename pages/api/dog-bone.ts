@@ -26,7 +26,7 @@ export default async function handler(
     case HttpMethod.POST:
       try {
         const body: IDogBonePostRequest = req.body;
-        if (!body.shanesistoza) throw 'Not Shane!';
+        if (!body.isShane) throw 'Not Shane!';
 
         const newDogBoneTally = await prisma.tally.create({
           data: { category: TallyCategory.DogBone },
