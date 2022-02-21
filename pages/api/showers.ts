@@ -34,7 +34,7 @@ export default async function handler(
           data: { category: TallyCategory.Shower },
         });
 
-        res.status(HttpStatus.CREATED).json(newShowerTally);
+        return res.status(HttpStatus.CREATED).json(newShowerTally);
       } catch (e) {
         console.error('Request error', e);
         res.status(500).json({ error: 'Error posting showers' });
