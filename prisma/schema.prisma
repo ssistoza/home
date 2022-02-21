@@ -24,6 +24,7 @@ model Tally {
   id Int @default(autoincrement()) @id
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  isTestData Boolean? @default(false)
   category TallyCategory
 }
 

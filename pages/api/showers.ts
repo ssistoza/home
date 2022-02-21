@@ -26,19 +26,19 @@ export default async function handler(
       try {
         const body: IShowerPostRequest = req.body;
         if (!body.isShane) {
-          res.status(HttpStatus.UNAUTHORIZED).end('You are not Shane!');
-          return;
+          return res.status(HttpStatus.UNAUTHORIZED).end('You are not Shane!');
         }
 
         const newShowerTally = await prisma.tally.create({
           data: { category: TallyCategory.Shower },
         });
 
-        return res.status(HttpStatus.CREATED).json(newShowerTally);
+        res.status(HttpStatus.CREATED).json(newShowerTally);
       } catch (e) {
         console.error('Request error', e);
         res.status(500).json({ error: 'Error posting showers' });
       }
+      break;
     default:
       res.setHeader('Allow', ['GET', 'POST']);
       res.status(405).end(`Method ${method} Not Allowed`);
