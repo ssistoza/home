@@ -17,7 +17,7 @@ export default async function handler(
         const showers = await prisma.tally.findMany({
           where: {
             category: { equals: TallyCategory.Shower },
-            isTestData: { equals: Boolean(removeTest) },
+            isTestData: { not: Boolean(removeTest) },
           },
         });
         res.status(HttpStatus.OK).json(showers);
